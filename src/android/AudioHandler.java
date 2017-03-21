@@ -210,15 +210,12 @@ public class AudioHandler extends CordovaPlugin {
             callbackContext.sendPluginResult(new PluginResult(status, f));
             return true;
         }
-		
-		//REM mods
-		else if (action.equals("getRecordDbLevel")) {
-            float f = this.getAudioRecordDbLevel(args.getString(0));
+		else if (action.equals("getCurrentAmplitudeAudio")) {
+            float f = this.getCurrentAmplitudeAudio(args.getString(0));
             callbackContext.sendPluginResult(new PluginResult(status, f));
             return true;
         }
-		//---
-		
+
         else if (action.equals("create")) {
             String id = args.getString(0);
             String src = FileHelper.stripFileProtocol(args.getString(1));

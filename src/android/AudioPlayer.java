@@ -458,36 +458,19 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
      * @return    double dbLevel
      */
 
-    public float getRecordDbLevel() {
+    public float getCurrentAmplitude() {
 
-        double reference = 0.00002; // Pa reference minimum
-
-        if (this.state == STATE.MEDIA_RUNNING) {
-            int maxAmplitude = this.recorder.getMaxAmplitude();
-
-            /* 
-            /  Warning!
-            /
-            /  This is a desperate attempt to determine dB (SPL).
-            /  Without proper calibration for each device, the reference value is a best guess.
-            /  Please do not count on these values for anything other than to provide at least some feedback that
-            /  something is being recorded.
-            /
-            /  The pascal pressure is calculated based on the idea that the max amplitude (being a value between 0 and 32767)
-            /  is relative to the pressure.
-
-            /  The value 51805.5336 used below is derived from the assumption that when x = 32767, pressure = 0.6325 Pa and that
-            /  when x = 1, pressure = 0.0002 Pa (the reference value)
-            /
-            */
-
-            double pressure = maxAmplitude / 51805.5336;
-            double dB = 20 * Math.log10(pressure/reference);
-            return (float)dB;
+        if (this.recorder != null) {
+            try{
+                if (this.state == STATE.MEDIA_RUNNING) {
+                    return (float) this.recorder.getMaxAmplitude() / 32762;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        else {
-            return -1;
-        }
+        return 0;
     }
 	
 	

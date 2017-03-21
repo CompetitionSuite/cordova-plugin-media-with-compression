@@ -169,12 +169,11 @@ Media.prototype.resumeRecord = function() {
 
 if (cordova.platformId === 'android' ) {
     Media.prototype.getRecordLevels = function(success, fail) {
-        var me = this;
         exec(function(p) {
-            me._db = p;
             success(p);
-        }, fail, "Media", "getRecordDbLevel", [this.id]);
+        }, fail, "Media", "getCurrentAmplitudeAudio", [this.id]);
     };
+
 } else if (cordova.platformId === 'ios') {
     Media.prototype.getRecordLevels = function(success, fail) {
         exec(success,fail, "Media", "getAudioRecordingLevels", [this.id]);
